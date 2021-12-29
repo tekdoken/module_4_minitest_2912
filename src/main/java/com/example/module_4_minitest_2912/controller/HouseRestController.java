@@ -50,4 +50,8 @@ public class HouseRestController {
         iHouseService.remote(id);
         return new ResponseEntity<>(HttpStatus.OK);
     }
+    @GetMapping("/findById/{id}")
+    public ResponseEntity<Optional<House>> findById(@PathVariable Long id){
+        return new ResponseEntity<>(iHouseService.findById(id),HttpStatus.OK);
+    }
 }
