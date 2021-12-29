@@ -44,4 +44,5 @@ public class HouseRestController {
         iHouseService.save(house);
         return new ResponseEntity<>(houseOptional, HttpStatus.OK);
     }
+
 }
