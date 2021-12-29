@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IHouseRepository extends JpaRepository<House,Long> {
+    Iterable<House> findByBathroomGreaterThanEqual(int bathroom);
 }

@@ -31,4 +31,9 @@ public class HouseService implements IHouseService {
     public void remote(Long id) {
         iHouseRepository.deleteById(id);
     }
+
+    @Override
+    public Iterable<House> findByBathroomGreaterThanEqual(int bathroom) {
+        return iHouseRepository.findByBathroomGreaterThanEqual(bathroom);
+    }
 }

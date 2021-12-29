@@ -25,6 +25,10 @@ public class HouseRestController {
     public ResponseEntity<Iterable<House>> list() {
         return new ResponseEntity<>(iHouseService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/listBathroom")
+    public ResponseEntity<Iterable<House>> listBathroom() {
+        return new ResponseEntity<>(iHouseService.findByBathroomGreaterThanEqual(3), HttpStatus.OK);
+    }
 
     @GetMapping("/category")
     public ResponseEntity<Iterable<Category>> cateogry() {
