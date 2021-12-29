@@ -45,4 +45,9 @@ public class HouseRestController {
         return new ResponseEntity<>(houseOptional, HttpStatus.OK);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<House> delete(@PathVariable Long id) {
+        iHouseService.remote(id);
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
 }
