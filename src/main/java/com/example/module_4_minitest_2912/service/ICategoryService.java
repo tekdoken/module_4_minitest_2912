@@ -1,4 +1,6 @@
 package com.example.module_4_minitest_2912.service;
 
-public interface ICategoryService {
+import com.example.module_4_minitest_2912.model.Category;
+
+public interface ICategoryService extends IGeneralService<Category>{
 }
