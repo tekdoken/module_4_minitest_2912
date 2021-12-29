@@ -18,14 +18,24 @@
         function displayHouse(array) {
             let list = ""
             for (let i = 0; i < array.length; i++) {
-                list += array[i].name + " " +
+                list +=array[i].id + " " +
+                    array[i].name + " " +
                     array[i].bathroom + " " +
                     array[i].category.name +
-                    "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
+                    // "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
                     "<button onclick='remote (" + array[i].id + ")'>delete</button>"
                     + "<br>"
             }
             document.getElementById("display").innerHTML = list
+        }
+        function remote(id) {
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/api/houses/delete/"+id,
+                success: function (a) {
+                    getAllHouse(a)
+                }
+            })
         }
     </script>
 </head>
