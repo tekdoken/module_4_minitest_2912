@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        function getAllHouse() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/houses/list",
+                success: function (a) {
+                    displayHouse(a)
+                }
+            })
+        }
+
+        function displayHouse(array) {
+            let list = ""
+            for (let i = 0; i < array.length; i++) {
+                list += array[i].name + " " +
+                    array[i].bathroom + " " +
+                    array[i].score + " " +
+                    array[i].classz.name +
+                    "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
+                    "<button onclick='remote (" + array[i].id + ")'>delete</button>"
+                    + "<br>"
+            }
+            document.getElementById("display").innerHTML = list
+        }
+    </script>
+</head>
+<body>
+<button onclick="getAllHouse()">show list house</button>
+<div id="display"></div>
+</body>
+</html>

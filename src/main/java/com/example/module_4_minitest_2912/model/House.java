@@ -8,7 +8,7 @@ public class House {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
-    private int batrooom;
+    private int bathroom;
     @ManyToOne
     @JoinColumn(name="category_id")
     private Category category;
@@ -29,12 +29,12 @@ public class House {
         this.name = name;
     }
 
-    public int getBatrooom() {
-        return batrooom;
+    public int getBathroom() {
+        return bathroom;
     }
 
-    public void setBatrooom(int batrooom) {
-        this.batrooom = batrooom;
+    public void setBathroom(int bathroom) {
+        this.bathroom = bathroom;
     }
 
     public Category getCategory() {
@@ -45,9 +45,9 @@ public class House {
         this.category = category;
     }
 
-    public House(String name, int batrooom, Category category) {
+    public House(String name, int bathroom, Category category) {
         this.name = name;
-        this.batrooom = batrooom;
+        this.bathroom = bathroom;
         this.category = category;
     }
 
