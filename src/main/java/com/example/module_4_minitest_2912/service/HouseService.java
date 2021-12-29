@@ -36,4 +36,9 @@ public class HouseService implements IHouseService {
     public Iterable<House> findByBathroomGreaterThanEqual(int bathroom) {
         return iHouseRepository.findByBathroomGreaterThanEqual(bathroom);
     }
+
+    @Override
+    public Iterable<House> findAllByOrderByName() {
+        return iHouseRepository.findAllByOrderByName();
+    }
 }

@@ -25,6 +25,10 @@ public class HouseRestController {
     public ResponseEntity<Iterable<House>> list() {
         return new ResponseEntity<>(iHouseService.findAll(), HttpStatus.OK);
     }
+    @GetMapping("/orderByName")
+    public ResponseEntity<Iterable<House>> orderByName() {
+        return new ResponseEntity<>(iHouseService.findAllByOrderByName(), HttpStatus.OK);
+    }
     @GetMapping("/listBathroom")
     public ResponseEntity<Iterable<House>> listBathroom() {
         return new ResponseEntity<>(iHouseService.findByBathroomGreaterThanEqual(3), HttpStatus.OK);
