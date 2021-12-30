@@ -15,32 +15,173 @@
             })
         }
 
+        function getAllCategory() {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/houses/category",
+                success: function (a) {
+                    displayCategory(a)
+                }
+            })
+        }
+
         function displayHouse(array) {
             let list = ""
             for (let i = 0; i < array.length; i++) {
-                list +=array[i].id + " " +
+                list += array[i].id + " " +
                     array[i].name + " " +
                     array[i].bathroom + " " +
                     array[i].category.name +
-                    // "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
-                    "<button onclick='remote (" + array[i].id + ")'>delete</button>"
+                    "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
+                    "<button onclick='remote (" + array[i].id + ")'>delete</button>" +
+                    "<button onclick='findOne (" + array[i].id + ")'>detail</button>"
                     + "<br>"
             }
             document.getElementById("display").innerHTML = list
         }
+
+        function getOne(array) {
+            let list = ""
+            list += array.id + " " +
+                array.name + " " +
+                array.bathroom + " " +
+                array.category.name + " " +
+                array.category.description
+                // "<button onclick='showFormEdit(" + array[i].id + ")'>edit</button>" +
+                +"<br>"
+            document.getElementById("display").innerHTML = list
+        }
+
+        function findOne(id) {
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/houses/findById/" + id,
+                success: function (a) {
+                    getOne(a)
+                }
+            })
+        }
+
+        function displayCategory(array) {
+            let list = ""
+            for (let i = 0; i < array.length; i++) {
+                list += array[i].id + " " +
+                    array[i].name
+                    + "<br>"
+            }
+            document.getElementById("displaycategory").innerHTML = list
+        }
+
         function remote(id) {
             $.ajax({
                 type: "DELETE",
-                url: "http://localhost:8080/api/houses/delete/"+id,
+                url: "http://localhost:8080/api/houses/delete/" + id,
                 success: function (a) {
                     getAllHouse(a)
                 }
             })
         }
+
+        function showFormAdd() {
+            let form = '<input type="text" id="name">\n' +
+                '<input type="number" id="bathroom">\n' +
+                '<select id="category" >';
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/houses/category",
+                success: function (a) {
+                    for (let i = 0; i < a.length; i++) {
+                        form += `<option value="${a[i].id}">${a[i].name}</option>`
+                    }
+                    form += `</select>\n` +
+                        '<button onclick="save()">save</button>';
+                    document.getElementById("display").innerHTML = form;
+                }
+            })
+            console.log(form)
+        }
+
+        function save() {
+            let name = document.getElementById("name").value
+            let bathroom = document.getElementById("bathroom").value
+            let category = document.getElementById("category").value
+            let a = {
+                name: name,
+                bathroom: bathroom,
+                category: {
+                    id: category
+                }
+            }
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "POST",
+                url: "http://localhost:8080/api/houses/add",
+                data: JSON.stringify(a),
+                success: function (a) {
+                    getAllHouse(a)
+                }
+            });
+        }
+        function showFormEdit(id) {
+            let edit = ""
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/api/houses/findById/" + id,
+                success: function (data) {
+                    // console.log(data)
+                    edit = '<input type="text"  id="name" value="' + data.name + '">\n' +
+                        '    <input type="number"  id="bathroom" value="' + data.bathroom + '">\n' +
+                        '<select id="category">\n';
+                    $.ajax({
+                        type: "GET",
+                        url: "http://localhost:8080/api/houses/category",
+                        success: function (a) {
+                            console.log(a)
+                            for (let i = 0; i < a.length; i++) {
+                                edit += `<option value="${a[i].id}">${a[i].name}</option>`
+                            }
+                            edit += `</select>` +
+                                '<button onclick="saveEdit(' + data.id + ')">save</button>';
+                            document.getElementById("display").innerHTML = edit;
+                        }
+                    })
+                }
+            })
+        }
+        function saveEdit(id) {
+            let name = document.getElementById("name").value
+            let bathroom = document.getElementById("bathroom").value
+            let category = document.getElementById("category").value
+            let a = {
+                name: name,
+                bathroom: bathroom,
+                category: {
+                    id: category
+                }
+            }
+            console.log(a)
+            $.ajax({
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                type: "PUT",
+                url: "http://localhost:8080/api/houses/edit/" + id,
+                data: JSON.stringify(a),
+                success: function (a) {
+                    getAllHouse(a)
+                }
+            });
+        }
     </script>
 </head>
-<body>
+<body onload="getAllCategory()">
 <button onclick="getAllHouse()">show list house</button>
+<button onclick="showFormAdd()">add</button>
 <div id="display"></div>
+<div id="displaycategory"></div>
 </body>
 </html>

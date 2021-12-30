@@ -1,0 +1,15 @@
+.logo, .banner ,#nav,.content ,.footer,.product{
+    border: 2px solid;
+    border-radius: 5px;
+    border-color: aqua;
+    margin-top: 5px;
+}
+body{
+    background: rgba(0, 0, 0, 0.39);
+}
+.logo, .banner {
+    height: 200px;
+}
+.footer{
+    height: 50px;
+}
